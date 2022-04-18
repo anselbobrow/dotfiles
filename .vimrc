@@ -23,6 +23,7 @@ Plug 'sickill/vim-pasta'
 Plug 'junegunn/vim-peekaboo'
 Plug 'wlangstroth/vim-racket'
 Plug 'honza/vim-snippets'
+Plug 'tpope/vim-surround'
 Plug 'christoomey/vim-tmux-navigator'
 
 call plug#end()
@@ -57,16 +58,6 @@ let g:everforest_enable_italic = 0
 let g:everforest_disable_italic_comment = 1
 
 colorscheme everforest
-
-"" autoformat on save with vim-autoformat (I'm using ALE for this now)
-"" au BufWrite * :Autoformat
-
-"" vim-autoformat settings
-"" let g:formatters_python = ['yapf']
-"" let g:autoformat_autoindent = 0
-"" let g:autoformat_retab = 0
-"" let g:autoformat_remove_trailing_spaces = 0
-
 
 set hidden
 set wildmenu
@@ -124,19 +115,6 @@ autocmd FileType vim setlocal commentstring=\"\"\ %s
 autocmd FileType cpp setlocal commentstring=//\ %s
 autocmd FileType c setlocal commentstring=//\ %s
 autocmd FileType python setlocal commentstring=#\ %s
-
-"" syntastic settings (I'm using ALE instead rn)
-"" set statusline+=%#warningmsg#
-"" set statusline+=%{SyntasticStatuslineFlag()}
-"" set statusline+=%*
-
-"" let g:syntastic_enable_highlighting = 0
-"" let g:syntastic_always_populate_loc_list = 1
-"" let g:syntastic_auto_loc_list = 2
-"" let g:syntastic_check_on_open = 1
-"" let g:syntastic_check_on_wq = 0
-"" let g:syntastic_enable_balloons = 1
-"" let g:syntastic_enable_racket_racket_checker = 1
 
 "" ale settings
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
@@ -218,35 +196,7 @@ nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
 nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
 nnoremap <silent> <M-\> :TmuxNavigatePrevious<cr>
 
-"" source explorer settings (I think this plugin is old so I'm phasing it out)
-"" nmap <F12> :SrcExplToggle<CR>
-"" let g:SrcExpl_jumpKey = ""
-"" let g:SrcExpl_gobackKey = ""
-"" let g:SrcExpl_nextDefKey = ""
-"" let g:SrcExpl_prevDefKey = ""
-
-"" let g:SrcExpl_winHeight = 20
-"" let g:SrcExpl_isUpdateTags = 0
-"" let g:SrcExpl_nestedAutoCmd = 1
-"" let g:SrcExpl_searchLocalDef = 0
-
-"" let g:SrcExpl_colorSchemeList = [
-""             \ "Red",
-""             \ "Cyan",
-""             \ "Green",
-""             \ "Yellow",
-""             \ "Magenta",
-"" \ ]
-
 "" NERDtree settings
 nmap <F8> :NERDTreeToggle<CR>
 "" open automatically on startup
 "" autocmd VimEnter * NERDTree | wincmd p
-
-"" vim-grepper settings
-nmap gs <plug>(GrepperOperator)
-xmap gs <plug>(GrepperOperator)
-
-"" autopairs settings
-"" let g:AutoPairsFlyMode = 1
-"" let g:AutoPairsShortcutBackInsert = '<M-b>'
