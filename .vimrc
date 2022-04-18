@@ -6,7 +6,7 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 "" Declare the list of plugins.
 Plug 'dense-analysis/ale'
 Plug 'jiangmiao/auto-pairs'
-Plug 'moll/vim-bbye'
+Plug 'turbio/bracey.vim'
 Plug 'Shougo/deoplete.nvim'
 Plug 'preservim/nerdtree'
 Plug 'edkolev/tmuxline.vim'
@@ -14,6 +14,7 @@ Plug 'SirVer/ultisnips'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'craigemery/vim-autotag'
+Plug 'moll/vim-bbye'
 Plug 'tpope/vim-commentary'
 Plug 'sainnhe/everforest'
 Plug 'tpope/vim-fugitive'
@@ -75,7 +76,7 @@ set hlsearch
 set incsearch
 nnoremap <Space> :nohl<CR>
 
-set backspace=start
+set backspace=start,eol
 
 set ignorecase
 set smartcase
@@ -149,12 +150,18 @@ let g:ale_fix_on_save = 1
 let g:ale_linters = {
 \   'python': ['pylsp'],
 \   'c': ['cc'],
+\   'javascript': ['tsserver'],
+\   'css': ['csslint'],
+\   'rust': ['rls'],
 \}
 
 let g:ale_fixers = {
 \   '*': ['trim_whitespace'],
 \   'python': ['yapf'],
 \   'c': ['clang-format'],
+\   'javascript': ['prettier'],
+\   'css': ['prettier'],
+\   'rust': ['rustfmt'],
 \}
 
 "" beep
@@ -183,6 +190,9 @@ set mouse=a
 let g:deoplete#enable_at_startup = 1
 "" disable suggestions based on local buffer
 "" call deoplete#custom#option('ignore_sources', {'_': ['around', 'buffer']})
+
+"" close preview window opened by deoplete when done
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 if !has('nvim')
     " M sends ^[ which is Esc, this disables M and similar keys in insert mode
@@ -238,5 +248,5 @@ nmap gs <plug>(GrepperOperator)
 xmap gs <plug>(GrepperOperator)
 
 "" autopairs settings
-let g:AutoPairsFlyMode = 1
-let g:AutoPairsShortcutBackInsert = '<M-b>'
+"" let g:AutoPairsFlyMode = 1
+"" let g:AutoPairsShortcutBackInsert = '<M-b>'
