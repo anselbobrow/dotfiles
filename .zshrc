@@ -1,13 +1,28 @@
 export PATH=$HOME/bin:$PATH
-export PATH=$PATH:/Users/anselbobrow/Library/Python/3.8/bin
-export PATH=$PATH:/usr/local/bin/nvim-osx64/bin
-
 export LDFLAGS="-L/usr/local/opt/openssl/lib"
 export CPPFLAGS="-I/usr/local/opt/openssl/include"
 
-export ZSH="/Users/anselbobrow/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
-PROMPT="%n %. $ "
+# add homebrew to path
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# enable pyenv
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
+# enable rbenv
+eval "$(rbenv init - zsh)"
+
+# add cargo to path
+source "$HOME/.cargo/env"
+
+# add zsh-autosuggestions to path
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# PROMPT="%n %. $ "
+
+ZSH_THEME="common"
+export LS_COLORS=$(vivid generate gruvbox-dark)
 
 # Uncomment the following line to automatically update without prompting.
 DISABLE_UPDATE_PROMPT="true"
@@ -29,15 +44,14 @@ export UPDATE_ZSH_DAYS=28
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-        zsh-autosuggestions
         macos
-        nvm
         git
         )
 
 # autosuggestions options
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=242"
 
+export ZSH_COMPDUMP=$ZSH/cache/.zcompdump-$HOST
 source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
@@ -52,7 +66,7 @@ fi
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 alias rm="rm -i"
-alias ls="ls -G"
+alias ls="gls --color"
 
 alias emacs="emacs -nw"
 alias v="nvim"
@@ -64,19 +78,13 @@ alias python="python3"
 alias pip="pip3"
 alias clang="clang -g -O2 -std=c99"
 
-alias ssh="/Users/anselbobrow/scripts/ssh-ident"
-alias scp="BINARY_SSH=scp /Users/anselbobrow/scripts/ssh-ident"
-alias zoo="ab3254@node.zoo.cs.yale.edu"
+alias ssh="$HOME/scripts/ssh-ident"
+alias scp="BINARY_SSH=scp $HOME/scripts/ssh-ident"
 
 # fzf config
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND="fd"
+export FZF_DEFAULT_COMMAND="fd -H -E .cargo -E Library -E .local"
 export FZF_DEFAULT_OPTS="+x -m"
-export FZF_CTRL_T_COMMAND="fd --type f"
-export FZF_ALT_C_COMMAND="fd --type d"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND --type f"
+export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"
 export FZF_COMPLETION_OPTS="+x -m"
-
-# enable iterm shell integration (with tmux)
-export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-

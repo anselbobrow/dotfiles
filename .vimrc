@@ -1,4 +1,5 @@
 set nocompatible
+set termguicolors
 
 function! Cond(cond, ...)
     let opts = get(a:000, 0, {})
@@ -42,25 +43,13 @@ augroup templates
     autocmd BufNewFile *.c 0r ~/.vim/templates/skeleton.c
 augroup END
 
-"" user color customizations
-augroup CustomColors
-    autocmd!
-    autocmd ColorScheme * hi Search cterm=NONE ctermfg=15 ctermbg=69
-                \ | hi IncSearch cterm=NONE ctermfg=15 ctermbg=69
-                \ | hi Visual cterm=NONE ctermfg=238 ctermbg=214
-                \ | hi CursorLine cterm=NONE ctermbg=237
-                \ | hi CursorLineNr cterm=NONE ctermfg=250 ctermbg=237
-                \ | hi LineNr cterm=NONE ctermfg=242
-                \ | hi SignColumn ctermbg=234
-augroup END
-
 set hidden
 set wildmenu
 set showcmd
 
 set hlsearch
 set incsearch
-nnoremap <Space> :nohl<CR>
+nnoremap <Space> :noh<CR>
 
 set backspace=start,eol
 
@@ -121,10 +110,22 @@ if (!exists('g:vscode'))
 
     "" gruvbox settings
     let g:gruvbox_italicize_comments = 1
-    let g:gruvbox_contrast_dark = 'hard'
+    let g:gruvbox_contrast_dark = 'medium'
     let g:gruvbox_italic = 1
 
     colorscheme gruvbox
+
+    "" user color customizations
+    "" augroup CustomColors
+    ""     autocmd!
+    ""     autocmd ColorScheme * hi Search cterm=NONE ctermfg=15 ctermbg=69
+    ""                 \ | hi IncSearch cterm=NONE ctermfg=15 ctermbg=69
+    ""                 \ | hi Visual cterm=NONE ctermfg=238 ctermbg=214
+    ""                 \ | hi CursorLine cterm=NONE ctermbg=237
+    ""                 \ | hi CursorLineNr cterm=NONE ctermfg=250 ctermbg=237
+    ""                 \ | hi LineNr cterm=NONE ctermfg=242
+    ""                 \ | hi SignColumn ctermbg=234
+    "" augroup END
 
     "" ale settings
     nmap <silent> <C-k> <Plug>(ale_previous_wrap)
@@ -134,6 +135,8 @@ if (!exists('g:vscode'))
     let g:ale_echo_msg_format = '[%linter%] %s'
     let g:ale_lint_delay = 300
     let g:ale_fix_on_save = 1
+    let g:ale_hover_cursor = 0
+    let g:ale_set_balloons = 1
 
     let g:ale_linters = {
                 \   'python': ['pylsp'],
@@ -164,7 +167,7 @@ if (!exists('g:vscode'))
     let g:airline_powerline_fonts = 1
     let g:airline#extensions#tabline#enabled = 1
     let g:airline#extensions#tabline#formatter = 'unique_tail'
-    let g:airline_theme='everforest'
+    let g:airline_theme='gruvbox'
     let g:airline_section_b=airline#section#create(['%{FugitiveStatusline()}'])
     let g:airline_section_z=airline#section#create_right(['%p%%', '%l/%L'])
     let g:airline#extensions#ale#enabled = 1
