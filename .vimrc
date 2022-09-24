@@ -20,9 +20,9 @@ Plug 'wlangstroth/vim-racket'
 Plug 'sainnhe/everforest', Cond(!exists('g:vscode'))
 Plug 'morhetz/gruvbox', Cond(!exists('g:vscode'))
 Plug 'dense-analysis/ale', Cond(!exists('g:vscode'))
-Plug 'Shougo/deoplete.nvim', Cond(!exists('g:vscode'))
-Plug 'madskjeldgaard/vim-scdoc-snippets', Cond(!exists('g:vscode'))
-Plug 'SirVer/ultisnips', Cond(!exists('g:vscode'))
+Plug 'Shougo/deoplete.nvim', Cond(!exists('g:vscode') && has('nvim'))
+Plug 'madskjeldgaard/vim-scdoc-snippets', Cond(!exists('g:vscode') && has('nvim'))
+Plug 'SirVer/ultisnips', Cond(!exists('g:vscode') && has('nvim'))
 Plug 'edkolev/tmuxline.vim', Cond(!exists('g:vscode'))
 Plug 'vim-airline/vim-airline', Cond(!exists('g:vscode'))
 Plug 'vim-airline/vim-airline-themes', Cond(!exists('g:vscode'))
@@ -32,7 +32,7 @@ Plug 'preservim/nerdtree', Cond(!exists('g:vscode'))
 Plug 'moll/vim-bbye', Cond(!exists('g:vscode'))
 Plug 'sickill/vim-pasta', Cond(!exists('g:vscode'))
 Plug 'junegunn/vim-peekaboo', Cond(!exists('g:vscode'))
-Plug 'honza/vim-snippets', Cond(!exists('g:vscode'))
+Plug 'honza/vim-snippets', Cond(!exists('g:vscode') && has('nvim'))
 Plug 'christoomey/vim-tmux-navigator', Cond(!exists('g:vscode'))
 Plug 'tpope/vim-fugitive', Cond(!exists('g:vscode'))
 
@@ -109,9 +109,11 @@ if (!exists('g:vscode'))
     "" let g:everforest_disable_italic_comment = 1
 
     "" gruvbox settings
-    let g:gruvbox_italicize_comments = 1
+    if has('nvim')
+        let g:gruvbox_italicize_comments = 1
+        let g:gruvbox_italic = 1
+    endif
     let g:gruvbox_contrast_dark = 'medium'
-    let g:gruvbox_italic = 1
 
     colorscheme gruvbox
 
