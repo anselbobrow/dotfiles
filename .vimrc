@@ -16,7 +16,9 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'fladson/vim-kitty'
 Plug 'wlangstroth/vim-racket'
+Plug 'easymotion/vim-easymotion'
 
+Plug 'mhinz/vim-startify', Cond(!exists('g:vscode'))
 Plug 'sainnhe/everforest', Cond(!exists('g:vscode'))
 Plug 'morhetz/gruvbox', Cond(!exists('g:vscode'))
 Plug 'dense-analysis/ale', Cond(!exists('g:vscode'))
@@ -35,6 +37,11 @@ Plug 'junegunn/vim-peekaboo', Cond(!exists('g:vscode'))
 Plug 'honza/vim-snippets', Cond(!exists('g:vscode') && has('nvim'))
 Plug 'christoomey/vim-tmux-navigator', Cond(!exists('g:vscode'))
 Plug 'tpope/vim-fugitive', Cond(!exists('g:vscode'))
+Plug 'kyazdani42/nvim-web-devicons', Cond(!exists('g:vscode') && has('nvim'))
+Plug 'nvim-treesitter/nvim-treesitter', Cond(!exists('g:vscode') && has('nvim'), {'do': ':TSUpdate'})
+Plug 'nvim-lua/plenary.nvim', Cond(!exists('g:vscode') && has('nvim'))
+Plug 'nvim-telescope/telescope.nvim', Cond(!exists('g:vscode') && has('nvim'), {'branch': '0.1.x'})
+Plug 'nvim-telescope/telescope-fzf-native.nvim', Cond(!exists('g:vscode') && has('nvim'), { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' })
 
 call plug#end()
 
@@ -43,6 +50,8 @@ augroup templates
     autocmd BufNewFile *.c 0r ~/.vim/templates/skeleton.c
 augroup END
 
+let mapleader = ","
+
 set hidden
 set wildmenu
 set showcmd
@@ -50,6 +59,7 @@ set showcmd
 set hlsearch
 set incsearch
 nnoremap <Space> :noh<CR>
+nnoremap <Leader>r :source ~/.vimrc<CR>
 
 set backspace=start,eol
 
@@ -97,6 +107,13 @@ autocmd FileType cpp setlocal commentstring=//\ %s
 autocmd FileType c setlocal commentstring=//\ %s
 autocmd FileType python setlocal commentstring=#\ %s
 
+"" easymotion settings
+map <Leader> <Plug>(easymotion-prefix)
+noremap f <Plug>(easymotion-f)
+noremap F <Plug>(easymotion-F)
+noremap t <Plug>(easymotion-t)
+noremap T <Plug>(easymotion-T)
+
 if (!exists('g:vscode'))
     "" colortheme settings
 
@@ -139,6 +156,8 @@ if (!exists('g:vscode'))
     let g:ale_fix_on_save = 1
     let g:ale_hover_cursor = 0
     let g:ale_set_balloons = 1
+    let g:ale_c_parse_makefile = 1
+    let g:ale_c_always_make = 0
 
     let g:ale_linters = {
                 \   'python': ['pylsp'],
@@ -158,12 +177,6 @@ if (!exists('g:vscode'))
                 \}
 
     "" beep
-
-    "" ultisnips settings
-    let g:UltiSnipsExpandTrigger="<tab>"
-    let g:UltiSnipsJumpForwardTrigger="<c-j>"
-    let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-    let g:UltiSnipsSnippetDirectories = ['UltiSnips', 'scnvim-data']
 
     "" airline settings
     let g:airline_powerline_fonts = 1
@@ -235,4 +248,26 @@ if (!exists('g:vscode'))
     let g:scnvim_eval_flash_repeats = 1
     let g:scnvim_eval_flash_duration = 150
 
-endif "" !exists(g:vscode)
+    if has('nvim')
+        "" ultisnips settings
+        let g:UltiSnipsExpandTrigger="<tab>"
+        let g:UltiSnipsJumpForwardTrigger="<c-j>"
+        let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+        let g:UltiSnipsSnippetDirectories = ['UltiSnips', 'scnvim-data']
+
+        "" startify settings
+        let g:startify_bookmarks = [ {'v': '~/.vimrc'}, {'z': '~/.zshrc'} ]
+
+        "" telescope settings
+        :luafile ~/.config/nvim/lua/telescope.setup
+
+        :nnoremap <Leader>ff :Telescope find_files<CR>
+        :nnoremap <Leader>fg :Telescope find_files find_command="fd,--base-directory ~/"<CR>
+        :nnoremap <Leader>fd :Telescope find_files find_command=fd,--hidden,--base-directory=~<CR>
+        :nnoremap <Leader>gf :Telescope git_files<CR>
+        :nnoremap <Leader>gs :Telescope live_grep<CR>
+        :nnoremap <Leader><C-p> :Telescope buffers theme=dropdown initial_mode=normal<CR>
+        :nnoremap <Leader>pp :Telescope planets theme=dropdown initial_mode=normal<CR>
+    endif "" has('nvim')
+
+endif "" !exists('g:vscode')
