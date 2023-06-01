@@ -124,3 +124,5 @@ eval "$(register-python-argcomplete pipx)"
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 export LC_CTYPE="en_US.UTF-8"
+
+export PATH=$PATH:/Users/anselbob/.toolbox/bin
