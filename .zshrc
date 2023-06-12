@@ -48,6 +48,7 @@ export UPDATE_ZSH_DAYS=28
 plugins=(
         macos
         git
+        fzf
         )
 
 # autosuggestions options
@@ -55,6 +56,14 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=242"
 
 # enable homebrew completions
 FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+
+# fzf config
+export FZF_DEFAULT_COMMAND="fd -Ha --base-directory /Users/anselbob/ -E .cargo -E Library -E .local -E .cache"
+export FZF_DEFAULT_OPTS="+x -m"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND --type f"
+export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"
+export FZF_ALT_C_OPTS="--preview 'tree -C -L 5 {}'"
+export FZF_COMPLETION_OPTS="+x -m"
 
 export ZSH_COMPDUMP=$ZSH/cache/.zcompdump-$HOST
 source $ZSH/oh-my-zsh.sh
@@ -92,14 +101,7 @@ alias acup="arduino-cli compile && arduino-cli upload"
 
 alias l2="tree -L 2"
 
-# fzf config
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND="fd -Ha --base-directory /Users/ansel/ -E .cargo -E Library -E .local -E .cache -E 'iTunes Media' -E Media.localized"
-export FZF_DEFAULT_OPTS="+x -m"
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND --type f"
-export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"
-export FZF_ALT_C_OPTS="--preview 'tree -C -L 5 {}'"
-export FZF_COMPLETION_OPTS="+x -m"
+alias scd="ssh dev-dsk-anselbob-1d-20c080e9.us-east-1.amazon.com"
 
 # nvm config
 export NVM_DIR="$HOME/.nvm"
@@ -125,4 +127,11 @@ export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 export LC_CTYPE="en_US.UTF-8"
 
+# add toolbox path
 export PATH=$PATH:/Users/anselbob/.toolbox/bin
+
+# add brazil cli completion
+source /Users/anselbob/.brazil_completion/zsh_completion
+
+# add java to path
+export JAVA_HOME=$(/usr/libexec/java_home)
