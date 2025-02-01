@@ -7,38 +7,25 @@ lvim.colorscheme = "retrobox"
 lvim.transparent_window = true
 
 lvim.plugins = {
-  {
-    "alexghergh/nvim-tmux-navigation",
-    config = function()
-      require("nvim-tmux-navigation").setup {
-        keybindings = {
-          left = "<M-h>",
-          down = "<M-j>",
-          up = "<M-k>",
-          right = "<M-l>",
-          last_active = "<M-\\>",
-          next = "<M-Space>",
-        }
-      }
-    end,
-  },
-  {
-    "ggandor/leap.nvim",
-    name = "leap",
-    config = function()
-      require("leap").add_default_mappings()
-    end,
-  },
-  { "tpope/vim-surround" },
+	{
+		"ggandor/leap.nvim",
+		name = "leap",
+		config = function()
+			require("leap").add_default_mappings()
+		end,
+	},
+	{ "tpope/vim-abolish" },
+	{ "tpope/vim-surround" },
 }
 
-local formatters = require "lvim.lsp.null-ls.formatters"
-formatters.setup {
-  {
-    name = "prettier",
-    filetypes = { "typescript", "typescriptreact" },
-  }
-}
+local formatters = require("lvim.lsp.null-ls.formatters")
+formatters.setup({
+	{
+		name = "prettier",
+		filetypes = { "typescript", "typescriptreact" },
+	},
+	{ name = "stylua" },
+})
 
 lvim.keys.normal_mode["<C-h>"] = false
 lvim.keys.normal_mode["<C-j>"] = false
@@ -49,7 +36,9 @@ lvim.keys.normal_mode["<M-j>"] = false
 lvim.keys.normal_mode["<M-k>"] = false
 lvim.keys.normal_mode["<M-l>"] = false
 
-lvim.keys.normal_mode["<S-l>"] = ":bn<CR>"
-lvim.keys.normal_mode["<S-h>"] = ":bp<CR>"
+lvim.keys.normal_mode["<S-l>"] = "<cmd>BufferLineCycleNext<cr>"
+lvim.keys.normal_mode["<S-h>"] = "<cmd>BufferLineCyclePrev<cr>"
 lvim.keys.normal_mode["<M-C-j>"] = ":m .+1<CR>=="
 lvim.keys.normal_mode["<M-C-k>"] = ":m .-2<CR>=="
+
+vim.opt.relativenumber = true
