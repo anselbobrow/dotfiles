@@ -4,6 +4,10 @@ export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
+# set up homebrew
+export PATH=$PATH:$HOME/.toolbox/bin
+eval $(/opt/homebrew/bin/brew shellenv)
+
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="cloud" # set by `omz`
 export LS_COLORS=$(vivid generate gruvbox-dark)
@@ -15,7 +19,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
-plugins=(git colored-man-pages zsh-autosuggestions tmux sudo brew aliases)
+plugins=(git colored-man-pages tmux sudo brew aliases)
 
 # Completion setup
 FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
@@ -29,43 +33,22 @@ source $ZSH/oh-my-zsh.sh
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
-  export EDITOR='lvim'
+  export EDITOR='nvim'
 fi
 
 # aliases
 alias ls="gls --color"
-alias v="lvim"
+alias v="nvim"
 alias t2="tree -I node_modules -L 2"
 alias t5="tree -I node_modules -L 5"
 alias zfg="v ~/.zshrc"
 alias gg="lazygit"
 
-# set up homebrew
-export PATH=$PATH:$HOME/.toolbox/bin
-eval "$(/opt/homebrew/bin/brew shellenv)"
-
 # fzf config
 export FZF_ALT_C_COMMAND="fd -t d \
   -E Library \
-  -E brazil-pkg-cache \
   --search-path /Volumes/workplace"
-
 source <(fzf --zsh)
 
-# rbenv init
-eval "$(rbenv init -)"
-
-# amzn specific after this line
-
-# aliases
-alias bb="brazil-build"
-alias bba="brazil-recursive-cmd brazil-build --allPackages"
-alias bws="brazil ws"
-alias bvs="brazil vs"
-alias cri="cr --amend -o --issue "
-alias mwi="mwinit --fido2 -s"
-export WP="$HOME/workplace"
-
-# set up mise for runtime management
-eval "$(mise activate zsh)"
-source /Users/anselbob/.brazil_completion/zsh_completion
+# enable zsh-autosuggestions
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
