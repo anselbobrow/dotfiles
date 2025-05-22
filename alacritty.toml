@@ -10,7 +10,7 @@ offset = { y = 5 }
 [window]
 option_as_alt = "Both"
 padding = {x = 5, y = 10}
-decorations = "None"
+decorations = "Buttonless"
 
 [scrolling]
 history = 50100
