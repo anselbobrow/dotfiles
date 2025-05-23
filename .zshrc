@@ -43,6 +43,7 @@ alias t2="tree -I node_modules -L 2"
 alias t5="tree -I node_modules -L 5"
 alias zfg="v ~/.zshrc"
 alias gg="lazygit"
+alias tp="trash-put"
 
 # fzf config
 export FZF_ALT_C_COMMAND="fd -t d \
