@@ -52,6 +52,7 @@ local config = {
     '-Declipse.product=org.eclipse.jdt.ls.core.product',
     '-Dlog.protocol=true',
     '-Dlog.level=ALL',
+    '-javaagent:' .. mason_path .. 'packages/jdtls/lombok.jar',
     '-Xmx1g',
     '--add-modules=ALL-SYSTEM',
     '--add-opens',
