@@ -74,8 +74,8 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- HJKL as amplified versions of hjkl + rebind existing actions
 vim.keymap.set({ 'n', 'v' }, 'H', '0^')
 vim.keymap.set({ 'n', 'v' }, 'L', '$')
-vim.keymap.set({ 'n', 'v' }, 'J', '}')
-vim.keymap.set({ 'n', 'v' }, 'K', '{')
+vim.keymap.set({ 'n', 'v' }, 'J', '6j')
+vim.keymap.set({ 'n', 'v' }, 'K', '6k')
 vim.keymap.set({ 'n', 'v' }, 'M', 'J') -- mnemonic: [M]erge
 vim.keymap.set('n', '<leader>k', 'K')
 
@@ -947,7 +947,22 @@ require('lazy').setup {
       scrolloff_percentage = 0.4,
     },
   },
+  { -- oil
+    'stevearc/oil.nvim',
+    ---@module 'oil'
+    ---@type oil.SetupOpts
+    opts = {
+      delete_to_trash = true,
+    },
+    keys = {
+      { '<leader>o', '<cmd>Oil<cr>', desc = 'Browse current directory' },
+    },
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
+    lazy = false,
+  },
   'tpope/vim-sleuth',
+  'tpope/vim-abolish',
 }
 
 -- The line beneath this is called `modeline`. See `:help modeline`
