@@ -115,6 +115,15 @@ local config = {
   init_options = {
     bundles = bundles,
   },
+
+  handlers = {
+    ['language/status'] = function(_, result)
+      -- Print or whatever.
+    end,
+    ['$/progress'] = function(_, result, ctx)
+      -- disable progress updates.
+    end,
+  },
 }
 
 config['on_attach'] = function()
