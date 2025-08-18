@@ -5,7 +5,7 @@ export ZSH="$HOME/.oh-my-zsh"
 
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="cloud"
-export LS_COLORS=$(vivid generate gruvbox-dark)
+export LS_COLORS=$(vivid generate gruvbox-light)
 
 # use vivid generated colors for autocompletion
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
