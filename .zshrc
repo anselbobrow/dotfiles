@@ -1,7 +1,5 @@
-# If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
-
-# Path to your Oh My Zsh installation.
+export PATH=$HOME/bin:$PATH
+export PATH="$PATH:/Users/ansel/.local/bin"
 export ZSH="$HOME/.oh-my-zsh"
 
 # set up homebrew
@@ -10,6 +8,7 @@ eval $(/opt/homebrew/bin/brew shellenv)
 
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="cloud" # set by `omz`
+
 export LS_COLORS=$(vivid generate gruvbox-dark)
 
 # Uncomment the following line if you want to disable marking untracked files
@@ -53,3 +52,23 @@ export FZF_ALT_C_COMMAND="fd -t d \
   -E Library \
   --search-path /Users/ansel/"
 source <(fzf --zsh)
+
+# enable pyenv and pyenv-virtualenv
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+
+# avert pipenv warning
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+export LC_CTYPE="en_US.UTF-8"
+
+# enable rbenv
+eval "$(rbenv init - zsh)"
+
+# add cargo to path
+source "$HOME/.cargo/env"
+
+# opam init
+[[ ! -r /Users/ansel/.opam/opam-init/init.zsh ]] || source /Users/ansel/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
