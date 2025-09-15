@@ -19,7 +19,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
-plugins=(git colored-man-pages tmux sudo brew aliases)
+plugins=(git colored-man-pages zsh-autosuggestions tmux sudo brew aliases)
 
 # Completion setup
 FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
@@ -36,8 +36,11 @@ else
   export EDITOR='nvim'
 fi
 
-# aliases
+# use vivid generated colors for ls and autocompletion
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 alias ls="gls --color"
+
+# aliases
 alias v="nvim"
 alias t2="tree -I node_modules -L 2"
 alias t5="tree -I node_modules -L 5"
@@ -48,8 +51,5 @@ alias tp="trash-put"
 # fzf config
 export FZF_ALT_C_COMMAND="fd -t d \
   -E Library \
-  --search-path /Volumes/workplace"
+  --search-path /Users/ansel/"
 source <(fzf --zsh)
-
-# enable zsh-autosuggestions
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
