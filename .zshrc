@@ -46,26 +46,13 @@ alias t5="tree -I node_modules -L 5"
 alias zfg="v ~/.zshrc"
 alias gg="lazygit"
 alias tp="trash-put"
+alias p="pnpm"
 
 # fzf config
 export FZF_ALT_C_COMMAND="fd -t d \
   -E Library \
   --search-path /Users/ansel/"
 source <(fzf --zsh)
-
-# enable pyenv and pyenv-virtualenv
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
-
-# avert pipenv warning
-export LANG="en_US.UTF-8"
-export LC_ALL="en_US.UTF-8"
-export LC_CTYPE="en_US.UTF-8"
-
-# enable rbenv
-eval "$(rbenv init - zsh)"
 
 # add cargo to path
 source "$HOME/.cargo/env"
