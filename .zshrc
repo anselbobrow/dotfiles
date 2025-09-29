@@ -7,25 +7,37 @@ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="cloud"
 export LS_COLORS=$(vivid generate gruvbox-dark)
 
+# use vivid generated colors for autocompletion
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
+# fzf config
+export FZF_ALT_C_COMMAND="fd -t d \
+  --search-path /home/ansel/"
+
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
-plugins=(git colored-man-pages tmux sudo aliases)
+plugins=(
+  git
+  tmux
+  fzf
+  sudo
+  aliases
+  docker-compose
+  colored-man-pages
+  zsh-autosuggestions
+)
 
 rm -f $ZSH_COMPDUMP
 
 source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
-  export EDITOR='nvim'
-fi
+export EDITOR='nvim'
 
 # aliases
 alias v="nvim"
@@ -36,15 +48,3 @@ alias t10="tree -I node_modules -L 10"
 alias zfg="v ~/.zshrc"
 alias gg="lazygit"
 alias tp="trash-put"
-
-# use vivid generated colors for autocompletion
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-
-# fzf config
-export FZF_ALT_C_COMMAND="fd -t d \
-  --search-path /home/ansel/"
-
-# `apt show fzf`
-# less /usr/share/doc/fzf/README.Debian
-source /usr/share/doc/fzf/examples/key-bindings.zsh
-source /usr/share/doc/fzf/examples/completion.zsh
