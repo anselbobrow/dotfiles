@@ -70,6 +70,7 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Open [D]iagnostic under cursor' })
 
 -- HJKL as amplified versions of hjkl + rebind existing actions
 vim.keymap.set({ 'n', 'v' }, 'H', '0^')
@@ -79,20 +80,16 @@ vim.keymap.set({ 'n', 'v' }, 'K', '6k')
 vim.keymap.set({ 'n', 'v' }, 'M', 'J') -- mnemonic: [M]erge
 vim.keymap.set('n', '<leader>k', 'K')
 
--- Tab navigation
-vim.keymap.set('n', '[t', '<cmd>tabp<CR>')
-vim.keymap.set('n', ']t', '<cmd>tabn<CR>')
-
 -- [[ Better folding ]]
 
 -- Set foldmethod and basic settings
 -- https://www.reddit.com/r/neovim/comments/1jmqd7t/sorry_ufo_these_7_lines_replaced_you/
 vim.o.foldenable = true
 vim.o.foldlevel = 99
+vim.o.foldlevelstart = 99
 vim.o.foldnestmax = 4
 vim.o.foldtext = ''
 vim.opt.foldcolumn = '0'
-vim.opt.fillchars:append { fold = ' ' }
 vim.o.foldmethod = 'expr'
 -- Default to treesitter for fold method (overridden later in LSPAttach autocommand)
 vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
@@ -267,6 +264,9 @@ require('lazy').setup {
         pyright = {},
         ts_ls = {},
         jsonls = {},
+        emmet_language_server = {
+          filetypes = { 'html', 'typescriptreact', 'javascriptreact' },
+        },
         lua_ls = {
           settings = {
             Lua = {
@@ -434,7 +434,7 @@ require('lazy').setup {
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'vim', 'vimdoc' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -442,9 +442,9 @@ require('lazy').setup {
         -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
         --  If you are experiencing weird indenting issues, add the language to
         --  the list of additional_vim_regex_highlighting and disabled languages for indent.
-        additional_vim_regex_highlighting = { 'ruby' },
+        additional_vim_regex_highlighting = { 'ruby', 'typescriptreact', 'typescript' },
       },
-      indent = { enable = true, disable = { 'ruby' } },
+      indent = { enable = true, disable = { 'ruby', 'typescriptreact', 'typescript' } },
       -- Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
       incremental_selection = {
         enable = true,
@@ -553,13 +553,13 @@ require('lazy').setup {
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
       vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
-      vim.keymap.set('n', '<leader>sh', builtin.git_status, { desc = '[S]earch git status' })
+      vim.keymap.set('n', '<leader>st', builtin.git_status, { desc = '[S]earch Git s[T]atus' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-      vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
-      vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+      vim.keymap.set('n', '<leader>s.', builtin.resume, { desc = '[S]earch [R]esume ("." for repeat)' })
+      vim.keymap.set('n', '<leader>sr', builtin.oldfiles, { desc = '[S]earch Recent Files' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
       -- Slightly advanced example of overriding default behavior and theme
@@ -961,6 +961,26 @@ require('lazy').setup {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
     lazy = false,
+  },
+  { -- lazygit
+    'kdheepak/lazygit.nvim',
+    lazy = true,
+    cmd = {
+      'LazyGit',
+      'LazyGitConfig',
+      'LazyGitCurrentFile',
+      'LazyGitFilter',
+      'LazyGitFilterCurrentFile',
+    },
+    -- optional for floating window border decoration
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+    -- setting the keybinding for LazyGit with 'keys' is recommended in
+    -- order to load the plugin when the command is run for the first time
+    keys = {
+      { '<leader>gg', '<cmd>LazyGit<cr>', desc = 'LazyGit' },
+    },
   },
   'tpope/vim-sleuth',
   'tpope/vim-abolish',
