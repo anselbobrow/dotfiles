@@ -283,11 +283,12 @@ require('lazy').setup {
       }
 
       -- Ensure the servers and tools above are installed
-      local ensure_installed = vim.tbl_keys(servers or {})
-      vim.list_extend(ensure_installed, {
+      -- local ensure_installed = vim.tbl_keys(servers or {})
+      -- vim.list_extend(ensure_installed, {
+      local ensure_installed = {
         'stylua', -- Used to format Lua code
         'jdtls', -- Set up with nvim-jdtls, so not added to servers list
-      })
+      }
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('mason-lspconfig').setup {

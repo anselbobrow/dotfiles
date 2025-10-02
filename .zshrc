@@ -41,6 +41,7 @@ export EDITOR='nvim'
 
 # aliases
 alias v="nvim"
+alias sv="sudo nvim -u /home/ansel/.config/nvim/init.lua"
 alias t2="tree -I node_modules -L 2"
 alias t3="tree -I node_modules -L 3"
 alias t5="tree -I node_modules -L 5"
