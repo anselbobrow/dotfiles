@@ -1,16 +1,17 @@
 general.import = [
-    "~/.config/alacritty/themes/gruvbox_dark.toml"
+    "~/.config/alacritty/themes/gruvbox_light.toml"
 ]
 
 [font]
 normal = { family = "CaskaydiaMono Nerd Font", style = "Regular" }
-size = 16
+size = 14
 offset = { y = 5 }
 
 [window]
 option_as_alt = "Both"
-padding = {x = 5, y = 10}
+padding = {x = 0, y = 10}
 decorations = "Buttonless"
+resize_increments = true
 
 [scrolling]
 history = 50100
