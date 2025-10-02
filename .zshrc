@@ -9,7 +9,7 @@ eval $(/opt/homebrew/bin/brew shellenv)
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="cloud" # set by `omz`
 
-export LS_COLORS=$(vivid generate gruvbox-dark)
+export LS_COLORS=$(vivid generate gruvbox-light)
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories

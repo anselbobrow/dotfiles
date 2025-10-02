@@ -441,9 +441,9 @@ require('lazy').setup {
         -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
         --  If you are experiencing weird indenting issues, add the language to
         --  the list of additional_vim_regex_highlighting and disabled languages for indent.
-        additional_vim_regex_highlighting = { 'ruby', 'typescriptreact', 'typescript' },
+        additional_vim_regex_highlighting = { 'ruby', 'typescriptreact', 'typescript', 'json' },
       },
-      indent = { enable = true, disable = { 'ruby', 'typescriptreact', 'typescript' } },
+      indent = { enable = true, disable = { 'ruby', 'typescriptreact', 'typescript', 'json' } },
       -- Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
       incremental_selection = {
         enable = true,
@@ -461,13 +461,13 @@ require('lazy').setup {
             [']f'] = '@function.outer',
             [']a'] = '@argument.outer',
             [']m'] = '@method.outer',
-            [']o'] = '@comment.outer',
+            [']c'] = '@comment.outer',
           },
           goto_previous_start = {
             ['[f'] = '@function.outer',
             ['[a'] = '@argument.outer',
             ['[m'] = '@method.outer',
-            ['[o'] = '@comment.outer',
+            ['[c'] = '@comment.outer',
           },
         },
         swap = {
@@ -912,9 +912,16 @@ require('lazy').setup {
           folds = false,
         },
         overrides = {
-          SignColumn = { bg = '#282828' },
-          CursorLineSign = { bg = '#3c3836' },
-          GruvboxYellowSign = { bg = '#282828' },
+          -- dark mode
+          -- SignColumn = { bg = '#282828' },
+          -- CursorLineSign = { bg = '#3c3836' },
+          -- GruvboxYellowSign = { bg = '#282828' },
+          -- end
+          -- light mode
+          SignColumn = { bg = '#fbf1c7' },
+          CursorLineSign = { bg = '#fbf1c7' },
+          GruvboxYellowSign = { bg = '#fbf1c7' },
+          -- end
           LspReferenceWrite = { link = 'Visual' },
           LspReferenceRead = { link = 'Visual' },
           LspReferenceText = { link = 'Visual' },
@@ -923,6 +930,7 @@ require('lazy').setup {
       }
 
       -- Load the colorscheme here.
+      vim.o.background = 'light'
       vim.cmd.colorscheme 'gruvbox'
     end,
   },
@@ -940,12 +948,6 @@ require('lazy').setup {
     event = 'VimEnter',
     dependencies = { 'nvim-lua/plenary.nvim' },
     opts = { signs = false },
-  },
-  { -- smart-scrolloff
-    'tonymajestro/smart-scrolloff.nvim',
-    opts = {
-      scrolloff_percentage = 0.4,
-    },
   },
   { -- oil
     'stevearc/oil.nvim',
@@ -983,6 +985,7 @@ require('lazy').setup {
   },
   'tpope/vim-sleuth',
   'tpope/vim-abolish',
+  'tpope/vim-obsession',
 }
 
 -- The line beneath this is called `modeline`. See `:help modeline`
