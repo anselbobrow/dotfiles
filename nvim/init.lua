@@ -64,9 +64,16 @@ vim.opt.confirm = true
 
 -- [[ Keymaps ]]
 
+-- Go to end of line (helpful for closing autopairs)
+vim.keymap.set('i', '<c-e>', '<esc>A')
+
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+-- Paste on a new line
+vim.keymap.set('n', '<leader>p', 'o<esc>p')
+vim.keymap.set('n', '<leader>P', 'o<esc>P')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
@@ -645,6 +652,12 @@ require('lazy').setup {
               require('luasnip.loaders.from_vscode').lazy_load()
             end,
           },
+          {
+            'solidjs-community/solid-snippets',
+            config = function()
+              require('luasnip.loaders.from_vscode').lazy_load()
+            end,
+          },
         },
         opts = {},
       },
@@ -848,10 +861,14 @@ require('lazy').setup {
           },
         },
       }
-
-      -- Autopairs
-      require('mini.pairs').setup {}
     end,
+  },
+  { -- autopairs
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    config = true,
+    -- use opts = {} for passing setup options
+    -- this is equivalent to setup({}) function
   },
   { -- demicolon
     'mawkler/demicolon.nvim',
