@@ -59,3 +59,9 @@ source "$HOME/.cargo/env"
 
 # opam init
 [[ ! -r /Users/ansel/.opam/opam-init/init.zsh ]] || source /Users/ansel/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
+
+# pyenv init
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - zsh)"
+
