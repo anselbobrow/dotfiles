@@ -64,9 +64,16 @@ vim.opt.confirm = true
 
 -- [[ Keymaps ]]
 
+-- Go to end of line (helpful for closing autopairs)
+vim.keymap.set('i', '<c-e>', '<esc>A')
+
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+-- Paste on a new line
+vim.keymap.set('n', '<leader>p', 'o<esc>p')
+vim.keymap.set('n', '<leader>P', 'o<esc>P')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
@@ -79,20 +86,6 @@ vim.keymap.set({ 'n', 'v' }, 'J', '6j')
 vim.keymap.set({ 'n', 'v' }, 'K', '6k')
 vim.keymap.set({ 'n', 'v' }, 'M', 'J') -- mnemonic: [M]erge
 vim.keymap.set('n', '<leader>k', 'K')
-
--- [[ Better folding ]]
-
--- Set foldmethod and basic settings
--- https://www.reddit.com/r/neovim/comments/1jmqd7t/sorry_ufo_these_7_lines_replaced_you/
-vim.o.foldenable = true
-vim.o.foldlevel = 99
-vim.o.foldlevelstart = 99
-vim.o.foldnestmax = 4
-vim.o.foldtext = ''
-vim.opt.foldcolumn = '0'
-vim.o.foldmethod = 'expr'
--- Default to treesitter for fold method (overridden later in LSPAttach autocommand)
-vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
 -- [[ Highlight when yanking text ]]
 --  Try it with `yap` in normal mode
@@ -185,12 +178,6 @@ require('lazy').setup {
           --
           -- When you move your cursor, the highlights will be cleared (the second autocommand).
           local client = vim.lsp.get_client_by_id(event.data.client_id)
-
-          -- Prefer LSP folding to treesitter if client supports it
-          if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_foldingRange, event.buf) then
-            local win = vim.api.nvim_get_current_win()
-            vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
-          end
 
           if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
             local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
@@ -646,6 +633,12 @@ require('lazy').setup {
               require('luasnip.loaders.from_vscode').lazy_load()
             end,
           },
+          {
+            'solidjs-community/solid-snippets',
+            config = function()
+              require('luasnip.loaders.from_vscode').lazy_load()
+            end,
+          },
         },
         opts = {},
       },
@@ -849,10 +842,19 @@ require('lazy').setup {
           },
         },
       }
-
-      -- Autopairs
-      require('mini.pairs').setup {}
     end,
+  },
+  { -- autopairs
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    config = true,
+    -- use opts = {} for passing setup options
+    -- this is equivalent to setup({}) function
+  },
+  { -- nvim-ts-autotag
+    'windwp/nvim-ts-autotag',
+    ft = { 'html', 'typescriptreact', 'javascriptreact' },
+    opts = {},
   },
   { -- demicolon
     'mawkler/demicolon.nvim',
@@ -888,6 +890,10 @@ require('lazy').setup {
   },
   { -- origami
     'chrisgrieser/nvim-origami',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+      'neovim/nvim-lspconfig',
+    },
     event = 'VeryLazy',
     opts = {
       autoFold = {
@@ -895,6 +901,10 @@ require('lazy').setup {
         kinds = { 'imports' }, ---@type lsp.FoldingRangeKind[]
       },
     },
+    init = function()
+      vim.opt.foldlevel = 99
+      vim.opt.foldlevelstart = 99
+    end,
   },
   { -- gruvbox
     -- Change the name of the colorscheme plugin below, and then
