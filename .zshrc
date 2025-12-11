@@ -17,7 +17,9 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # fzf config
 export FZF_ALT_C_COMMAND="fd -t d \
-  --search-path /home/ansel/"
+  --search-path /home/ansel/ \
+  --search-path /mnt/zfs/ \
+  --search-path /srv/docker/"
 
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
@@ -49,3 +51,14 @@ alias t10="tree -I node_modules -L 10"
 alias zfg="v ~/.zshrc"
 alias gg="lazygit"
 alias tp="trash-put"
+alias mcr="mcrcon -p 0d8bbc76ac8bf82f18b90e1119977b50"
+alias ld="lazydocker"
+
+# pnpm
+export PNPM_HOME="/home/ansel/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+[ -s "/home/ansel/.jabba/jabba.sh" ] && source "/home/ansel/.jabba/jabba.sh"
