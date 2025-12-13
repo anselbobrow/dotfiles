@@ -608,7 +608,10 @@ require('lazy').setup {
         -- python = { "isort", "black" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
+        html = { 'prettierd', 'prettier', stop_after_first = true },
+        css = { 'prettierd', 'prettier', stop_after_first = true },
         typescript = { 'prettierd', 'prettier', stop_after_first = true },
+        typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
       },
     },
   },
@@ -896,7 +899,7 @@ require('lazy').setup {
     event = 'VeryLazy',
     opts = {
       autoFold = {
-        enabled = true,
+        enabled = false,
         kinds = { 'imports' }, ---@type lsp.FoldingRangeKind[]
       },
     },
@@ -996,6 +999,7 @@ require('lazy').setup {
   'tpope/vim-sleuth',
   'tpope/vim-abolish',
   'tpope/vim-obsession',
+  'tpope/vim-commentary',
 }
 
 -- The line beneath this is called `modeline`. See `:help modeline`
