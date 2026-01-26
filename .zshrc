@@ -4,8 +4,9 @@ export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 export ZSH="$HOME/.oh-my-zsh"
 
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="cloud"
-export LS_COLORS=$(vivid generate gruvbox-light)
+ZSH_THEME="cloud" # set by `omz`
+
+export LS_COLORS=$(vivid generate gruvbox-dark)
 
 # use vivid generated colors for autocompletion
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
@@ -42,13 +43,21 @@ source $ZSH/oh-my-zsh.sh
 export EDITOR='nvim'
 
 # aliases
-alias v="nvim"
-alias sv="sudo nvim -u /home/ansel/.config/nvim/init.lua"
+v() {
+  if [ "$#" -eq 0 ]; then
+    if [ -f Session.vim ]; then
+    nvim -S Session.vim
+  else
+    nvim
+    fi
+  else
+    nvim "$@"
+  fi
+}
 alias t2="tree -I node_modules -L 2"
 alias t3="tree -I node_modules -L 3"
 alias t5="tree -I node_modules -L 5"
-alias t10="tree -I node_modules -L 10"
-alias zfg="v ~/.zshrc"
+alias zfg="nvim ~/.zshrc"
 alias gg="lazygit"
 alias tp="trash-put"
 alias mcr="mcrcon -p 0d8bbc76ac8bf82f18b90e1119977b50"

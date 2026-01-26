@@ -1,6 +1,3 @@
-vim.o.ts = 2
-vim.o.sw = 2
-
 vim.keymap.set('n', '<leader>gs', function()
   local f = vim.fn.expand '%:p'
   local b = vim.fn.expand '%:r'
