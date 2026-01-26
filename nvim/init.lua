@@ -73,7 +73,7 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Paste on a new line
 vim.keymap.set('n', '<leader>p', 'o<esc>p')
-vim.keymap.set('n', '<leader>P', 'o<esc>P')
+vim.keymap.set('n', '<leader>P', 'O<esc>p')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
@@ -85,7 +85,6 @@ vim.keymap.set({ 'n', 'v' }, 'L', '$')
 vim.keymap.set({ 'n', 'v' }, 'J', '6j')
 vim.keymap.set({ 'n', 'v' }, 'K', '6k')
 vim.keymap.set({ 'n', 'v' }, 'M', 'J') -- mnemonic: [M]erge
-vim.keymap.set('n', '<leader>k', 'K')
 
 -- [[ Highlight when yanking text ]]
 --  Try it with `yap` in normal mode
@@ -136,6 +135,9 @@ require('lazy').setup {
             mode = mode or 'n'
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
+
+          -- Hover symbol under cursor.
+          map('<leader>k', vim.lsp.buf.hover, 'Hover')
 
           -- Rename the variable under your cursor.
           --  Most Language Servers support renaming across files, etc.
@@ -246,6 +248,9 @@ require('lazy').setup {
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         -- See `:help lspconfig-all` for a list of all the pre-configured LSPs
+        bashls = {
+          filetypes = { 'bash', 'sh', 'zsh' },
+        },
         clangd = {},
         rust_analyzer = {},
         pyright = {},
@@ -273,6 +278,7 @@ require('lazy').setup {
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'prettierd', -- for formatting web stuff
         'jdtls', -- Set up with nvim-jdtls, so not added to servers list
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
@@ -926,14 +932,14 @@ require('lazy').setup {
         },
         overrides = {
           -- dark mode
-          -- SignColumn = { bg = '#282828' },
-          -- CursorLineSign = { bg = '#3c3836' },
-          -- GruvboxYellowSign = { bg = '#282828' },
+          SignColumn = { bg = '#282828' },
+          CursorLineSign = { bg = '#3c3836' },
+          GruvboxYellowSign = { bg = '#282828' },
           -- end
           -- light mode
-          SignColumn = { bg = '#fbf1c7' },
-          CursorLineSign = { bg = '#fbf1c7' },
-          GruvboxYellowSign = { bg = '#fbf1c7' },
+          -- SignColumn = { bg = '#fbf1c7' },
+          -- CursorLineSign = { bg = '#fbf1c7' },
+          -- GruvboxYellowSign = { bg = '#fbf1c7' },
           -- end
           LspReferenceWrite = { link = 'Visual' },
           LspReferenceRead = { link = 'Visual' },
@@ -943,7 +949,7 @@ require('lazy').setup {
       }
 
       -- Load the colorscheme here.
-      vim.o.background = 'light'
+      vim.o.background = 'dark'
       vim.cmd.colorscheme 'gruvbox'
     end,
   },

@@ -9,7 +9,7 @@ eval $(/opt/homebrew/bin/brew shellenv)
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="cloud" # set by `omz`
 
-export LS_COLORS=$(vivid generate gruvbox-light)
+export LS_COLORS=$(vivid generate gruvbox-dark)
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -40,10 +40,20 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 alias ls="gls --color"
 
 # aliases
-alias v="nvim"
+v() {
+  if [ "$#" -eq 0 ]; then
+    if [ -f Session.vim ]; then
+    nvim -S Session.vim
+  else
+    nvim
+    fi
+  else
+    nvim "$@"
+  fi
+}
 alias t2="tree -I node_modules -L 2"
 alias t5="tree -I node_modules -L 5"
-alias zfg="v ~/.zshrc"
+alias zfg="nvim ~/.zshrc"
 alias gg="lazygit"
 alias tp="trash-put"
 alias p="pnpm"
