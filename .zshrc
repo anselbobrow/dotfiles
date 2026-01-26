@@ -72,3 +72,6 @@ case ":$PATH:" in
 esac
 # pnpm end
 [ -s "/home/ansel/.jabba/jabba.sh" ] && source "/home/ansel/.jabba/jabba.sh"
+
+# add cargo to path
+export PATH="$PATH:/home/ansel/.cargo/bin"
