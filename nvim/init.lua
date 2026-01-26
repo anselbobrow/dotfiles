@@ -256,6 +256,7 @@ require('lazy').setup {
         pyright = {},
         ts_ls = {},
         jsonls = {},
+        yaml_language_server = {},
         emmet_language_server = {
           filetypes = { 'html', 'typescriptreact', 'javascriptreact' },
         },
