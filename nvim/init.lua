@@ -392,8 +392,8 @@ require('lazy').setup {
       local breakpoint_icons = { Breakpoint = '', BreakpointCondition = '', BreakpointRejected = '', LogPoint = '', Stopped = '' }
       for type, icon in pairs(breakpoint_icons) do
         local tp = 'Dap' .. type
-        local hl = (type == 'Stopped') and 'GruvboxYellowSign' or 'GruvboxRedSign'
-        vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl })
+        -- local hl = (type == 'Stopped') and 'GruvboxYellowSign' or 'GruvboxRedSign'
+        vim.fn.sign_define(tp, { text = icon, texthl = '', numhl = '', linehl = '' })
       end
 
       dap.listeners.after.event_initialized['dapui_config'] = dapui.open
@@ -900,61 +900,23 @@ require('lazy').setup {
       }
     end,
   },
-  { -- origami
-    'chrisgrieser/nvim-origami',
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter',
-      'neovim/nvim-lspconfig',
-    },
-    event = 'VeryLazy',
-    opts = {
-      autoFold = {
-        enabled = false,
-        kinds = { 'imports' }, ---@type lsp.FoldingRangeKind[]
-      },
-    },
-    init = function()
-      vim.opt.foldlevel = 99
-      vim.opt.foldlevelstart = 99
-    end,
-  },
-  { -- gruvbox
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'ellisonleao/gruvbox.nvim',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
+  {
+    'folke/tokyonight.nvim',
+    lazy = false,
+    priority = 1000,
     config = function()
-      require('gruvbox').setup {
-        italic = {
-          strings = false,
-          emphasis = false,
-          comments = false,
-          operators = false,
-          folds = false,
+      require('tokyonight').setup {
+        style = 'night', -- The theme comes in three styles, `storm`, a darker variant `night` and `day`
+        styles = {
+          -- Style to be applied to different syntax groups
+          -- Value is any valid attr-list value for `:help nvim_set_hl`
+          comments = { italic = false },
+          keywords = { italic = false },
         },
-        overrides = {
-          -- dark mode
-          SignColumn = { bg = '#282828' },
-          CursorLineSign = { bg = '#3c3836' },
-          GruvboxYellowSign = { bg = '#282828' },
-          -- end
-          -- light mode
-          -- SignColumn = { bg = '#fbf1c7' },
-          -- CursorLineSign = { bg = '#fbf1c7' },
-          -- GruvboxYellowSign = { bg = '#fbf1c7' },
-          -- end
-          LspReferenceWrite = { link = 'Visual' },
-          LspReferenceRead = { link = 'Visual' },
-          LspReferenceText = { link = 'Visual' },
-          LspReferenceTarget = { link = 'Visual' },
-        },
+        on_colors = function() end,
+        on_highlights = function() end,
       }
-
-      -- Load the colorscheme here.
-      vim.o.background = 'dark'
-      vim.cmd.colorscheme 'gruvbox'
+      vim.cmd.colorscheme 'tokyonight'
     end,
   },
   { -- lualine
