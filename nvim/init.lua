@@ -63,6 +63,8 @@ vim.opt.cursorline = true
 vim.opt.confirm = true
 
 -- [[ Keymaps ]]
+-- Faster write
+vim.keymap.set('n', '<leader>w', '<cmd>w<CR>')
 
 -- Go to end of line (helpful for closing autopairs)
 vim.keymap.set('i', '<c-e>', '<esc>A')
