@@ -257,6 +257,7 @@ require('lazy').setup {
         rust_analyzer = {},
         pyright = {},
         ts_ls = {},
+        eslint = {},
         jsonls = {},
         emmet_language_server = {
           filetypes = { 'html', 'typescriptreact', 'javascriptreact' },
@@ -379,6 +380,7 @@ require('lazy').setup {
         ensure_installed = {
           'javadbg',
           'javatest',
+          'cppdbg',
         },
 
         -- You can provide additional configuration to the handlers,
