@@ -921,10 +921,16 @@ require('lazy').setup {
   },
   { -- lualine
     'nvim-lualine/lualine.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    dependencies = { 'nvim-tree/nvim-web-devicons', 'tpope/vim-obsession' },
     opts = {
-      options = {
-        section_separators = { left = '', right = '' },
+      sections = {
+        lualine_x = { 'encoding', 'filetype' },
+        lualine_y = {
+          'progress',
+          function()
+            return vim.fn.ObsessionStatus('󰑊', '󰏤')
+          end,
+        },
       },
     },
   },
