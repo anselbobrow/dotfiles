@@ -1,0 +1,43 @@
+# theme and font
+theme = TokyoNight Night
+font-family = CaskaydiaMono Nerd Font
+font-size = 14
+font-thicken = true
+font-thicken-strength = 150
+adjust-cell-height = 5
+adjust-cell-width = -1
+
+# titlebar, split divider, and app icon
+split-divider-color = #82A1F1
+macos-icon = holographic
+title = " "
+
+# cursor
+cursor-style = block
+cursor-style-blink = false
+shell-integration-features = no-cursor,ssh-env,ssh-terminfo
+
+# bell
+bell-features = no-attention,no-title
+
+# KEYBINDS
+# navigation (split and tab)
+keybind = alt+n=next_tab
+keybind = alt+p=previous_tab
+keybind = alt+l=goto_split:right
+keybind = alt+h=goto_split:left
+keybind = alt+j=goto_split:down
+keybind = alt+k=goto_split:up
+
+# resizing and zooming splits
+keybind = alt+a>shift+l=resize_split:right,100
+keybind = alt+a>shift+h=resize_split:left,100
+keybind = alt+a>shift+j=resize_split:down,100
+keybind = alt+a>shift+k=resize_split:up,100
+keybind = alt+a>==equalize_splits
+keybind = alt+a>z=toggle_split_zoom
+
+# create and name new splits
+keybind = alt+a>shift+\=new_split:right
+keybind = alt+a>-=new_split:down
+keybind = alt+a>,=prompt_surface_title
