@@ -57,6 +57,7 @@ alias zfg="nvim ~/.zshrc"
 alias gg="lazygit"
 alias tp="trash-put"
 alias p="pnpm"
+alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 
 # fzf config
 export FZF_ALT_C_COMMAND="fd -t d \
