@@ -98,6 +98,13 @@ vim.keymap.set({ 'n', 'v' }, 'J', '6j')
 vim.keymap.set({ 'n', 'v' }, 'K', '6k')
 vim.keymap.set({ 'n', 'v' }, 'M', 'J') -- mnemonic: [M]erge
 
+-- Additional filetypes
+vim.filetype.add {
+  filename = {
+    ['Caddyfile'] = 'caddy',
+  },
+}
+
 -- [[ Highlight when yanking text ]]
 --  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`
