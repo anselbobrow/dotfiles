@@ -141,7 +141,13 @@ require('lazy').setup {
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
       -- Useful status updates for LSP.
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim', opts = {
+        notification = {
+          window = {
+            winblend = 0,
+          },
+        },
+      } },
 
       -- Allows extra capabilities provided by blink.cmp
       'saghen/blink.cmp',
@@ -924,13 +930,18 @@ require('lazy').setup {
     config = function()
       require('tokyonight').setup {
         style = 'night', -- The theme comes in three styles, `storm`, a darker variant `night` and `day`
+        transparent = true,
         styles = {
           -- Style to be applied to different syntax groups
           -- Value is any valid attr-list value for `:help nvim_set_hl`
           comments = { italic = false },
           keywords = { italic = false },
+          sidebars = 'transparent',
+          floats = 'transparent',
         },
-        on_colors = function() end,
+        on_colors = function(colors)
+          colors.bg_statusline = require('tokyonight.util').blend_bg(colors.bg_statusline, 0.1)
+        end,
         on_highlights = function() end,
       }
       vim.cmd.colorscheme 'tokyonight'
