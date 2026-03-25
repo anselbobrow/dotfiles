@@ -983,6 +983,7 @@ require('lazy').setup {
       { '<leader>gg', '<cmd>LazyGit<cr>', desc = 'LazyGit' },
     },
   },
+  { 'NMAC427/guess-indent.nvim', opts = {} },
   'tpope/vim-sleuth',
   'tpope/vim-abolish',
   'tpope/vim-obsession',
