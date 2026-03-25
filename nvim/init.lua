@@ -95,6 +95,14 @@ vim.filetype.add {
   },
 }
 
+-- [[ Folding ]]
+vim.o.foldmethod = 'expr'
+vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.o.foldcolumn = '0'
+vim.o.foldlevel = 99
+vim.o.foldlevelstart = 1
+vim.o.foldnestmax = 2
+
 -- [[ Diagnostics ]]
 -- See :help vim.diagnostic.Opts
 vim.diagnostic.config {
@@ -969,4 +977,4 @@ require('lazy').setup {
 }
 
 -- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et foldlevelstart=1
+-- vim: ts=2 sts=2 sw=2 et
