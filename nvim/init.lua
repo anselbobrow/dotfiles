@@ -278,7 +278,18 @@ require('lazy').setup {
         clangd = {},
         rust_analyzer = {},
         pyright = {},
-        ts_ls = {},
+        ts_ls = {
+          init_options = {
+            hostInfo = 'neovim',
+            preferences = {
+              -- ignore some solid-js invalid import dirs
+              -- https://github.com/typescript-language-server/typescript-language-server/blob/master/docs/configuration.md
+              autoImportSpecifierExcludeRegexes = {
+                'solid-js/types',
+              },
+            },
+          },
+        },
         eslint = {},
         jsonls = {},
         emmet_language_server = {
