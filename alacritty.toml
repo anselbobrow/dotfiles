@@ -3,7 +3,7 @@ general.import = [
 ]
 
 [font]
-normal = { family = "CaskaydiaCove Nerd Font Mono", style = "Regular" }
+normal = { family = "CaskaydiaMono Nerd Font Mono", style = "Regular" }
 size = 14
 offset = { y = 5 }
 
