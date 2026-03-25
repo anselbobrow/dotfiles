@@ -6,7 +6,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="cloud" # set by `omz`
 
-export LS_COLORS=$(vivid generate gruvbox-dark)
+export LS_COLORS=$(vivid generate tokyonight-night)
 
 # use vivid generated colors for autocompletion
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
@@ -46,9 +46,9 @@ export EDITOR='nvim'
 v() {
   if [ "$#" -eq 0 ]; then
     if [ -f Session.vim ]; then
-    nvim -S Session.vim
+    nvim -S Session.vim .
   else
-    nvim
+    nvim .
     fi
   else
     nvim "$@"

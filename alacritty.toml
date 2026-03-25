@@ -1,17 +1,20 @@
 general.import = [
-    "~/.config/alacritty/themes/gruvbox_dark.toml"
+    "~/.config/alacritty/themes/tokyo-night.toml"
 ]
 
 [font]
-normal = { family = "CaskaydiaMono Nerd Font", style = "Regular" }
+normal = { family = "CaskaydiaMono Nerd Font Mono", style = "Regular" }
 size = 14
 offset = { y = 5 }
 
 [window]
 option_as_alt = "Both"
-padding = {x = 0, y = 10}
-decorations = "Buttonless"
+padding = {x = 0, y = 30}
+decorations = "Transparent"
 resize_increments = true
+opacity = 0.8
+blur = true
+startup_mode = "Maximized"
 
 [scrolling]
 history = 50100
