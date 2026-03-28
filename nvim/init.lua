@@ -247,6 +247,7 @@ require('lazy').setup {
         },
         eslint = {},
         jsonls = {},
+        cssls = {},
         emmet_language_server = {
           filetypes = { 'html', 'typescriptreact', 'javascriptreact' },
         },
@@ -301,11 +302,12 @@ require('lazy').setup {
       vim.list_extend(ensure_installed, {
         'prettierd', -- for formatting web stuff
         'jdtls', -- Set up with nvim-jdtls, so not added to servers list
+        'yapf', -- for python formatting
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
-      for name, server in pairs(servers) do
-        vim.lsp.config(name, server)
+      for name, cfg in pairs(servers) do
+        vim.lsp.config(name, cfg)
         vim.lsp.enable(name)
       end
     end,
@@ -595,8 +597,7 @@ require('lazy').setup {
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
+        python = { 'yapf' },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         html = { 'prettierd', 'prettier', stop_after_first = true },
