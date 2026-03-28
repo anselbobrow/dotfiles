@@ -1,99 +1,29 @@
 -- [[ Options ]]
-
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-
--- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
 vim.o.number = true
 vim.o.relativenumber = true
-
--- Enable mouse mode and set scroll multipliers
 vim.o.mouse = 'a'
 vim.o.mousescroll = 'ver:1,hor:3'
-
--- Sync clipboard between OS and Neovim.
--- Schedule the setting after `UiEnter` because it can increase startup-time.
--- Remove this option if you want your OS clipboard to remain independent.
--- See `:help 'clipboard'`
-vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
-
--- Enable break indent
 vim.o.breakindent = true
-
--- Save undo history
 vim.o.undofile = true
-
--- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.o.ignorecase = true
 vim.o.smartcase = true
-
--- Keep signcolumn on by default
 vim.o.signcolumn = 'yes'
-
--- Decrease update time
 vim.o.updatetime = 250
-
--- Decrease mapped sequence wait time
 vim.o.timeoutlen = 300
-
--- Configure how new splits should be opened
 vim.o.splitright = true
 vim.o.splitbelow = true
-
--- Sets how neovim will display certain whitespace characters in the editor.
--- See `:help 'list'`
--- and `:help 'listchars'`
 vim.o.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-
--- Preview substitutions live, as you type!
 vim.o.inccommand = 'split'
-
--- Show which line your cursor is on
 vim.o.cursorline = true
-
--- If performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
--- instead raise a dialog asking if you wish to save the current file(s)
--- See `:help 'confirm'`
 vim.o.confirm = true
-
--- [[ Keymaps ]]
--- Faster write
-vim.keymap.set('n', '<leader>w', '<cmd>w<CR>')
-
--- Go to end of line (helpful for closing autopairs)
-vim.keymap.set('i', '<c-e>', '<esc>A')
-
--- Clear highlights on search when pressing <Esc> in normal mode
--- See `:help hlsearch`
-vim.keymap.set('n', '<Esc>', function()
-  vim
-    .iter(vim.api.nvim_tabpage_list_wins(0))
-    :filter(function(win_id) return vim.api.nvim_win_get_config(win_id).relative ~= '' end)
-    :each(function(win_id) vim.api.nvim_win_close(win_id, false) end)
-  vim.cmd 'nohlsearch'
-end)
-
--- Paste on a new line
-vim.keymap.set('n', '<leader>p', 'o<esc>p')
-vim.keymap.set('n', '<leader>P', 'O<esc>p')
-
--- HJKL as amplified versions of hjkl + rebind existing actions
-vim.keymap.set({ 'n', 'v' }, 'H', '0^')
-vim.keymap.set({ 'n', 'v' }, 'L', '$')
-vim.keymap.set({ 'n', 'v' }, 'J', '6j')
-vim.keymap.set({ 'n', 'v' }, 'K', '6k')
-vim.keymap.set({ 'n', 'v' }, 'M', 'J') -- mnemonic: [M]erge
-
--- Additional filetypes
-vim.filetype.add {
-  filename = {
-    ['Caddyfile'] = 'caddy',
-  },
-}
+-- Schedule the setting after `UiEnter` because it can increase startup-time.
+vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
 
 -- [[ Folding ]]
 vim.o.foldmethod = 'expr'
@@ -103,8 +33,27 @@ vim.o.foldlevel = 99
 vim.o.foldlevelstart = 1
 vim.o.foldnestmax = 2
 
+-- [[ Keymaps ]]
+vim.keymap.set('n', '<leader>w', '<cmd>w<CR>')
+vim.keymap.set('i', '<c-e>', '<esc>A')
+vim.keymap.set('n', '<Esc>', function()
+  vim
+    .iter(vim.api.nvim_tabpage_list_wins(0))
+    :filter(function(win_id) return vim.api.nvim_win_get_config(win_id).relative ~= '' end)
+    :each(function(win_id) vim.api.nvim_win_close(win_id, false) end)
+  vim.cmd 'nohlsearch'
+end)
+vim.keymap.set('n', '<leader>p', 'o<esc>p')
+vim.keymap.set('n', '<leader>P', 'O<esc>p')
+vim.keymap.set({ 'n', 'v' }, 'H', '0^')
+vim.keymap.set({ 'n', 'v' }, 'L', '$')
+vim.keymap.set({ 'n', 'v' }, 'J', '6j')
+vim.keymap.set({ 'n', 'v' }, 'K', '6k')
+vim.keymap.set({ 'n', 'v' }, 'M', 'J')
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Open [D]iagnostic under cursor' })
+
 -- [[ Diagnostics ]]
--- See :help vim.diagnostic.Opts
 vim.diagnostic.config {
   update_in_insert = false,
   severity_sort = true,
@@ -121,33 +70,39 @@ vim.diagnostic.config {
   -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
   jump = { float = true },
 }
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Open [D]iagnostic under cursor' })
+
+-- [[ Filetype mappings ]]
+vim.filetype.add {
+  filename = {
+    ['Caddyfile'] = 'caddy',
+  },
+}
 
 -- [[ Highlight when yanking text ]]
--- Try it with `yap` in normal mode
--- See `:help vim.highlight.on_yank()`
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function() vim.highlight.on_yank() end,
 })
 
--- [[ Install `lazy.nvim` plugin manager ]]
--- See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
+-- [[ Install `lazy.nvim` ]]
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
   local out = vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
-  if vim.v.shell_error ~= 0 then error('Error cloning lazy.nvim:\n' .. out) end
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { 'Failed to clone lazy.nvim:\n', 'ErrorMsg' },
+      { out, 'WarningMsg' },
+      { '\nPress any key to exit...' },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
 end
-
----@type vim.Option
-local rtp = vim.opt.rtp
-rtp:prepend(lazypath)
+vim.opt.rtp:prepend(lazypath)
 
 -- [[ Configure and install plugins ]]
-
 require('lazy').setup {
   { -- nvim-lspconfig
     'neovim/nvim-lspconfig',
