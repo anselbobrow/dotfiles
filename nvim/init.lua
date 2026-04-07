@@ -247,6 +247,7 @@ require('lazy').setup {
         },
         eslint = {},
         jsonls = {},
+        yamlls = {},
         cssls = {},
         emmet_language_server = {
           filetypes = { 'html', 'typescriptreact', 'javascriptreact' },
