@@ -68,11 +68,8 @@ source <(fzf --zsh)
 # add cargo to path
 source "$HOME/.cargo/env"
 
-# opam init
-[[ ! -r /Users/ansel/.opam/opam-init/init.zsh ]] || source /Users/ansel/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
+# mise init
+eval "$(/Users/ansel/.local/bin/mise activate zsh)"
 
-# pyenv init
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init - zsh)"
-
+# opam 
+[[ ! -r '/Users/ansel/.opam/opam-init/init.zsh' ]] || source '/Users/ansel/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null; true
