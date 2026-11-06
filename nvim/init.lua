@@ -22,6 +22,11 @@ vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 vim.o.inccommand = 'split'
 vim.o.cursorline = true
 vim.o.confirm = true
+vim.o.winborder = 'rounded'
+vim.o.spell = true
+vim.o.spelllang = 'en_us'
+vim.o.spellfile = '$HOME/code/dotfiles/nvim/dict.utf8.add'
+vim.o.spelloptions = 'camel'
 -- Schedule the setting after `UiEnter` because it can increase startup-time.
 vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
 
@@ -29,7 +34,7 @@ vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
 vim.o.foldmethod = 'manual' -- overridden in treesitter config
 vim.o.foldcolumn = '0'
 vim.o.foldlevel = 99
-vim.o.foldlevelstart = 1
+vim.o.foldlevelstart = 2
 vim.o.foldnestmax = 2
 
 -- [[ Keymaps ]]
