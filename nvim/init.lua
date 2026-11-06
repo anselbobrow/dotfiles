@@ -908,7 +908,11 @@ require('lazy').setup {
           floats = 'transparent',
         },
         on_colors = function(colors) colors.bg_statusline = require('tokyonight.util').blend_bg(colors.bg_statusline, 0.1) end,
-        on_highlights = function() end,
+        on_highlights = function(highlights)
+          highlights.LspInlayHint = {
+            fg = '#545c7e',
+          }
+        end,
       }
       vim.cmd.colorscheme 'tokyonight'
     end,
@@ -962,6 +966,17 @@ require('lazy').setup {
     -- order to load the plugin when the command is run for the first time
     keys = {
       { '<leader>gg', '<cmd>LazyGit<cr>', desc = 'LazyGit' },
+    },
+  },
+  { -- colorizer
+    'catgoose/nvim-colorizer.lua',
+    event = 'BufReadPre',
+    opts = {
+      parsers = {
+        names = {
+          enable = false,
+        },
+      },
     },
   },
   { 'NMAC427/guess-indent.nvim', opts = {} },
